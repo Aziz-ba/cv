@@ -39,6 +39,9 @@ main,.nav,footer{position:relative;z-index:2}
 .links a:hover{color:var(--accent)}
 .links a::after{content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;background:var(--accent);transition:width .25s}
 .links a:hover::after{width:100%}
+.links a.lang{border:1px solid var(--line);border-radius:8px;padding:3px 10px;font-weight:700;font-size:13px;letter-spacing:1px}
+.links a.lang:hover{border-color:var(--accent);color:var(--accent)}
+.links a.lang::after{display:none}
 .burger{display:none;background:none;border:0;cursor:pointer;flex-direction:column;gap:5px;padding:6px}
 .burger span{width:24px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
 

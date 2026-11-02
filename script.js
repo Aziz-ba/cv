@@ -10,7 +10,10 @@ burger.addEventListener("click", () => { links.classList.toggle("open"); burger.
 links.querySelectorAll("a").forEach(a => a.addEventListener("click", () => { links.classList.remove("open"); burger.classList.remove("x"); }));
 
 // ---------- typed role ----------
-const roles = ["Ingénieur Data & Analytics", "Snowflake · dbt · Power BI", "Data Engineer & AI"];
+const EN = document.documentElement.lang === "en";
+const roles = EN
+  ? ["Data & Analytics Engineer", "Snowflake · dbt · Power BI", "Data Engineer & AI"]
+  : ["Ingénieur Data & Analytics", "Snowflake · dbt · Power BI", "Data Engineer & AI"];
 const typed = document.getElementById("typed");
 let ri = 0, ci = 0, del = false;
 (function type() {
@@ -30,14 +33,14 @@ document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 // ---------- projects ----------
 const G = "https://github.com/Aziz-ba/";
 const projects = [
-  { ico: "🎬", name: "Movie Analytics — Fabric", desc: "Lakehouse Medallion et star schema Power BI.", tags: ["Fabric", "PySpark", "Power BI"], url: G + "fabric-movie-analytics" },
-  { ico: "🧊", name: "Data Lake sur Snowflake", desc: "Ingestion GCS vers Snowflake + app Streamlit.", tags: ["Snowflake", "GCP", "Streamlit"], url: G + "data-lake-project" },
-  { ico: "🎥", name: "IMDb Rating NLP", desc: "TF-IDF vs embeddings vs DistilBERT.", tags: ["NLP", "PyTorch", "scikit-learn"], url: G + "imdb-rating-nlp" },
-  { ico: "🏙️", name: "London Boroughs Data-viz", desc: "Scraping, nettoyage et dashboard interactif.", tags: ["pandas", "Plotly", "Streamlit"], url: G + "london-boroughs-dataviz" },
-  { ico: "🌡️", name: "IoT Sensor Telemetry", desc: "ESP32 vers MQTT vers InfluxDB vers Grafana.", tags: ["ESP32", "MQTT", "InfluxDB"], url: G + "iot-sensor-telemetry" },
-  { ico: "⚙️", name: "Infrastructure as Code", desc: "Stack AWS reproductible avec Terraform.", tags: ["Terraform", "Ansible", "AWS"], url: G + "infrastructure-as-code" },
-  { ico: "🔌", name: "REST API — Node.js", desc: "JWT, tests, Swagger et Docker.", tags: ["Express", "JWT", "Docker"], url: G + "rest-api-nodejs" },
-  { ico: "🚀", name: "CI/CD Pipeline", desc: "Jenkins vers Docker vers Kubernetes.", tags: ["Jenkins", "Docker", "K8s"], url: G + "cicd-jenkins-docker" },
+  { ico: "🎬", name: EN ? "Movie Analytics — Fabric" : "Movie Analytics — Fabric", desc: EN ? "Medallion lakehouse and Power BI star schema." : "Lakehouse Medallion et star schema Power BI.", tags: ["Fabric", "PySpark", "Power BI"], url: G + "fabric-movie-analytics" },
+  { ico: "🧊", name: EN ? "Data Lake on Snowflake" : "Data Lake sur Snowflake", desc: EN ? "GCS to Snowflake ingestion + Streamlit app." : "Ingestion GCS vers Snowflake + app Streamlit.", tags: ["Snowflake", "GCP", "Streamlit"], url: G + "data-lake-project" },
+  { ico: "🎥", name: "IMDb Rating NLP", desc: EN ? "TF-IDF vs embeddings vs DistilBERT." : "TF-IDF vs embeddings vs DistilBERT.", tags: ["NLP", "PyTorch", "scikit-learn"], url: G + "imdb-rating-nlp" },
+  { ico: "🏙️", name: "London Boroughs Data-viz", desc: EN ? "Scraping, cleaning and an interactive dashboard." : "Scraping, nettoyage et dashboard interactif.", tags: ["pandas", "Plotly", "Streamlit"], url: G + "london-boroughs-dataviz" },
+  { ico: "🌡️", name: "IoT Sensor Telemetry", desc: EN ? "ESP32 to MQTT to InfluxDB to Grafana." : "ESP32 vers MQTT vers InfluxDB vers Grafana.", tags: ["ESP32", "MQTT", "InfluxDB"], url: G + "iot-sensor-telemetry" },
+  { ico: "⚙️", name: "Infrastructure as Code", desc: EN ? "Reproducible AWS stack with Terraform." : "Stack AWS reproductible avec Terraform.", tags: ["Terraform", "Ansible", "AWS"], url: G + "infrastructure-as-code" },
+  { ico: "🔌", name: "REST API — Node.js", desc: EN ? "JWT, tests, Swagger and Docker." : "JWT, tests, Swagger et Docker.", tags: ["Express", "JWT", "Docker"], url: G + "rest-api-nodejs" },
+  { ico: "🚀", name: "CI/CD Pipeline", desc: EN ? "Jenkins to Docker to Kubernetes." : "Jenkins vers Docker vers Kubernetes.", tags: ["Jenkins", "Docker", "K8s"], url: G + "cicd-jenkins-docker" },
 ];
 const grid = document.getElementById("projects-grid");
 projects.forEach((p, i) => {
