@@ -1,6 +1,73 @@
 // ---------- year ----------
 document.getElementById("year").textContent = new Date().getFullYear();
 
+// ---------- dark/light theme toggle ----------
+const themeBtn = document.createElement("button");
+themeBtn.id = "theme-toggle";
+themeBtn.className = "theme-toggle";
+themeBtn.setAttribute("aria-label", "Toggle theme");
+
+const sunIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+const moonIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+
+const storedTheme = localStorage.getItem("theme");
+const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+let currentTheme = storedTheme || (prefersLight ? "light" : "dark");
+
+function applyTheme(theme) {
+  currentTheme = theme;
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("theme", theme);
+  themeBtn.innerHTML = theme === "light" ? moonIcon : sunIcon;
+}
+
+const themeStyle = document.createElement("style");
+themeStyle.textContent = `
+  body, .nav, .nav.scrolled, .skill-card, .proj, .facts li, .links, .chips span, footer, .btn {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  [data-theme="light"] {
+    --bg: #f8fafc;
+    --bg2: #f1f5f9;
+    --surface: #ffffff;
+    --surface2: #f1f5f9;
+    --text: #0f172a;
+    --muted: #475569;
+    --accent: #0284c7;
+    --accent2: #0d9488;
+    --line: #e2e8f0;
+  }
+  .theme-toggle {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 5px 9px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 12px;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .theme-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: scale(1.05);
+  }
+`;
+document.head.appendChild(themeStyle);
+
+const navLinks = document.querySelector(".links");
+if (navLinks) {
+  navLinks.appendChild(themeBtn);
+}
+applyTheme(currentTheme);
+
+themeBtn.addEventListener("click", () => {
+  applyTheme(currentTheme === "light" ? "dark" : "light");
+});
+
 // ---------- nav scroll + burger ----------
 const nav = document.getElementById("nav");
 addEventListener("scroll", () => nav.classList.toggle("scrolled", scrollY > 40));
