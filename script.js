@@ -168,3 +168,62 @@ function draw() {
 }
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches) { resize(); addEventListener("resize", resize); draw(); }
 else { cv.style.display = "none"; }
+
+// ---------- copy email button ----------
+const copyEmailStyle = document.createElement("style");
+copyEmailStyle.textContent = `
+  .copy-email-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .copy-tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--surface2);
+    color: var(--accent2);
+    border: 1px solid var(--line);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .copy-tooltip.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+`;
+document.head.appendChild(copyEmailStyle);
+
+const email = "azizbenayed.pro@gmail.com";
+document.querySelectorAll("#contact .cta").forEach(cta => {
+  const copyBtn = document.createElement("button");
+  copyBtn.type = "button";
+  copyBtn.className = "btn ghost copy-email-btn";
+  copyBtn.setAttribute("aria-label", EN ? "Copy email address" : "Copier l'adresse email");
+  copyBtn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>${EN ? "Copy email" : "Copier l'email"}</span><span class="copy-tooltip" role="status" aria-live="polite">${EN ? "Copied!" : "Copié !"}</span>`;
+
+  let timeoutId = null;
+  copyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(email).then(() => {
+      const tooltip = copyBtn.querySelector(".copy-tooltip");
+      tooltip.classList.add("show");
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        tooltip.classList.remove("show");
+      }, 2000);
+    });
+  });
+
+  cta.appendChild(copyBtn);
+});
